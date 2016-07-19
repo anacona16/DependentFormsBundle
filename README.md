@@ -48,6 +48,7 @@ anacona16_dependent_forms:
 
 #### Add form theming to twig
 ```yml
+# app/config/config.yml
 twig:
     ...
     form_themes:
@@ -62,7 +63,7 @@ php bin/console assets:install --symlink
 
 ### Load jQuery to your views
 ```html
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
 ```
 
 ### Documentation
