@@ -1,0 +1,24 @@
+{
+    "name": "anacona16/dependent-forms-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony DependendFormsBundle",
+    "keywords": ["Dependent form type", "Forms"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ramiro Anacona Meneses",
+            "email": "anacona16@gmail.com"
+        }
+    ],
+    "require": {
+        "php"                       : ">=5.3.9",
+        "symfony/symfony"           : "~2.8|~3.0",
+        "symfony/form"              : "~2.8|~3.0",
+        "symfony/framework-bundle"  : "~2.8|~3.0",
+        "symfony/property-access"   : "~2.8|~3.0"
+
+    },
+    "autoload": {
+        "psr-4": { "Anacona16\\Bundle\\DependentFormsBundle\\": "" }
+    }
+}

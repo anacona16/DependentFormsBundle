@@ -1,0 +1,45 @@
+{% block dependent_forms_widget %}
+    {{ dump(show_loading) }}
+    <select {{ block('widget_attributes') }}></select>
+
+    {% if show_loading %}
+        <img src='{{ asset('bundles/dependentforms/images/ajax-loader.gif' ) }}' id='loader' style='display: none;'>
+    {% endif %}
+    <script type="text/javascript">
+        jQuery(function () {
+
+            jQuery("select#{{ form.parent.offsetGet( parent_field ).vars.id }}").change(function () {
+                var selected_index = {{ value ? value : 0 }};
+                jQuery("#loader").show();
+                jQuery.ajax({
+                    type: "POST",
+                    data: {
+                        parent_id: jQuery(this).val(),
+                        entity_alias: "{{ entity_alias }}",
+                        empty_value: "{{ empty_value }}"
+                    },
+                    url: "{{ path('anacona16_dependent_forms') }}",
+                    success: function (msg) {
+                        if (msg != '') {
+                            jQuery("select#{{ form.vars.id }}").html(msg).show();
+                            jQuery.each(jQuery("select#{{ form.vars.id }} option"), function (index, option) {
+                                if (jQuery(option).val() == selected_index)
+                                    jQuery(option).prop('selected', true);
+                            });
+                            jQuery("select#{{ form.vars.id }}").trigger('change');
+                            jQuery("#loader").hide();
+                        } else {
+                            jQuery("select#{{ form.vars.id }}").html('<em>{{ no_result_msg|trans() }}</em>');
+                            jQuery("#loader").hide();
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        jQuery('html').html(xhr.responseText);
+                    }
+                });
+            });
+            jQuery("select#{{ form.parent.offsetGet( parent_field ).vars.id }}").trigger('change');
+        });
+    </script>
+
+{% endblock %}
