@@ -66,6 +66,6 @@ php bin/console assets:install --symlink
 <script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
 ```
 
-### Documentation
+## Documentation
 
 [Read documentation](https://github.com/anacona16/DependentFormsBundle/blob/master/Resources/doc/index.md)
