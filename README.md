@@ -38,7 +38,7 @@ public function registerBundles()
 
 ### Import routes
 
-```
+```yml
 # app/config/routing.yml
 anacona16_dependent_forms:
     resource: '@DependentFormsBundle/Resources/config/routing.xml'
@@ -60,9 +60,11 @@ twig:
 php bin/console assets:install --symlink
 ```
 
-Update your configuration in accordance with [using DependentFormsBundle](https://github.com/anacona16/DependentFormsBundle/blob/master/Resources/doc/index.md)
-
 ### Load jQuery to your views
 ```html
     <script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
 ```
+
+### Documentation
+
+[Read documentation](https://github.com/anacona16/DependentFormsBundle/blob/master/Resources/doc/index.md)
