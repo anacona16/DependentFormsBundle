@@ -20,58 +20,58 @@ class DependentFormsController extends Controller
     {
         $translator = $this->get('translator');
 
-        $entity_alias = $request->request->get('entity_alias');
-        $parent_id = $request->request->get('parent_id');
-        $empty_value = $request->request->get('empty_value');
+        $entityAlias = $request->request->get('entity_alias');
+        $parentId = $request->request->get('parent_id');
+        $emptyValue = $request->request->get('empty_value');
 
         $entities = $this->getParameter('anacona16.dependent_forms');
-        $entity_inf = $entities[$entity_alias];
+        $entityInformation = $entities[$entityAlias];
 
-        if ($entity_inf['role'] !== 'IS_AUTHENTICATED_ANONYMOUSLY') {
-            if (false === $this->get('security.authorization_checker')->isGranted($entity_inf['role'])) {
+        if ($entityInformation['role'] !== 'IS_AUTHENTICATED_ANONYMOUSLY') {
+            if (false === $this->get('security.authorization_checker')->isGranted($entityInformation['role'])) {
                 throw new AccessDeniedException();
             }
         }
 
         $qb = $this->getDoctrine()
-            ->getRepository($entity_inf['class'])
+            ->getRepository($entityInformation['class'])
             ->createQueryBuilder('e')
-            ->where('e.'.$entity_inf['parent_property'].' = :parent_id')
-            ->orderBy('e.'.$entity_inf['order_property'], $entity_inf['order_direction'])
-            ->setParameter('parent_id', $parent_id)
+            ->where('e.'.$entityInformation['parent_property'].' = :parent_id')
+            ->orderBy('e.'.$entityInformation['order_property'], $entityInformation['order_direction'])
+            ->setParameter('parent_id', $parentId)
         ;
 
-        if (null !== $entity_inf['callback']) {
-            $repository = $qb->getEntityManager()->getRepository($entity_inf['class']);
+        if (null !== $entityInformation['callback']) {
+            $repository = $qb->getEntityManager()->getRepository($entityInformation['class']);
 
-            if (!method_exists($repository, $entity_inf['callback'])) {
-                throw new \InvalidArgumentException(sprintf('Callback function "%s" in Repository "%s" does not exist.', $entity_inf['callback'], get_class($repository)));
+            if (!method_exists($repository, $entityInformation['callback'])) {
+                throw new \InvalidArgumentException(sprintf('Callback function "%s" in Repository "%s" does not exist.', $entityInformation['callback'], get_class($repository)));
             }
 
-            $repository->$entity_inf['callback']($qb);
+            $repository->$entityInformation['callback']($qb);
         }
 
         $results = $qb->getQuery()->getResult();
 
         if (empty($results)) {
-            return new Response('<option value="">'.$translator->trans($entity_inf['no_result_msg']).'</option>');
+            return new Response('<option value="">'.$translator->trans($entityInformation['no_result_msg']).'</option>');
         }
 
         $html = '';
-        if ($empty_value !== false) {
-            $html .= '<option value="">'.$translator->trans($empty_value).'</option>';
+        if ($emptyValue !== false) {
+            $html .= '<option value="">'.$translator->trans($emptyValue).'</option>';
         }
 
         $accesor = $this->get('property_accessor');
 
         foreach ($results as $result) {
-            if ($entity_inf['property']) {
-                $res = $accesor->getValue($result, $entity_inf['property']);
+            if ($entityInformation['property']) {
+                $resultString = $accesor->getValue($result, $entityInformation['property']);
             } else {
-                $res = (string) $result;
+                $resultString = (string) $result;
             }
 
-            $html .= sprintf('<option value="%d">%s</option>', $result->getId(), $res);
+            $html .= sprintf('<option value="%d">%s</option>', $result->getId(), $resultString);
         }
 
         return new Response($html);

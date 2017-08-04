@@ -3,14 +3,13 @@
     <select {{ block('widget_attributes') }}></select>
 
     {% if show_loading %}
-        <img src='{{ asset('bundles/dependentforms/images/ajax-loader.gif' ) }}' id='loader' style='display: none;'>
+        <img src="{{ asset('bundles/dependentforms/images/ajax-loader.gif' ) }}" id="dependent_forms_loader" style="display: none;">
     {% endif %}
     <script type="text/javascript">
         jQuery(function () {
-
             jQuery("select#{{ form.parent.offsetGet( parent_field ).vars.id }}").change(function () {
                 var selected_index = {{ value ? value : 0 }};
-                jQuery("#loader").show();
+                jQuery("#dependent_forms_loader").show();
                 jQuery.ajax({
                     type: "POST",
                     data: {
@@ -27,10 +26,10 @@
                                     jQuery(option).prop('selected', true);
                             });
                             jQuery("select#{{ form.vars.id }}").trigger('change');
-                            jQuery("#loader").hide();
+                            jQuery("#dependent_forms_loader").hide();
                         } else {
                             jQuery("select#{{ form.vars.id }}").html('<em>{{ no_result_msg|trans() }}</em>');
-                            jQuery("#loader").hide();
+                            jQuery("#dependent_forms_loader").hide();
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {

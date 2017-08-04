@@ -48,9 +48,11 @@ class EntityToIdTransformer implements DataTransformerInterface
         if (null === $entity || '' === $entity) {
             return 'null';
         }
+
         if (!is_object($entity)) {
             throw new UnexpectedTypeException($entity, 'object');
         }
+        
         if (!$this->unitOfWork->isInIdentityMap($entity)) {
             throw new InvalidConfigurationException('Entities passed to the choice field must be managed');
         }
