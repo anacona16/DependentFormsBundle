@@ -42,11 +42,11 @@ class DependentFormsType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entities = $this->container->getParameter('anacona16.dependent_forms');;
+        $entities = $this->container->getParameter('anacona16.dependent_forms');
 
         $options['class'] = $entities[$options['entity_alias']]['class'];
         $options['property'] = $entities[$options['entity_alias']]['property'];
@@ -66,9 +66,9 @@ class DependentFormsType extends AbstractType
     }
 
     /**
-     * @param FormView $view
+     * @param FormView      $view
      * @param FormInterface $form
-     * @param array $options
+     * @param array         $options
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

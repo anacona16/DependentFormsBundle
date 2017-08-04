@@ -27,7 +27,7 @@ class EntityToIdTransformer implements DataTransformerInterface
 
     /**
      * @param EntityManager $em
-     * @param string $class
+     * @param string        $class
      */
     public function __construct(EntityManager $em, $class)
     {
@@ -65,7 +65,7 @@ class EntityToIdTransformer implements DataTransformerInterface
      *
      * @return mixed|void
      *
-     * @throws TransformationFailedException if object is not found.
+     * @throws TransformationFailedException if object is not found
      */
     public function reverseTransform($id)
     {
