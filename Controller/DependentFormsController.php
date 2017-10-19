@@ -71,7 +71,7 @@ class DependentFormsController extends Controller
                 $resultString = (string) $result;
             }
 
-            $html .= sprintf('<option value="%d">%s</option>', $result->getId(), $resultString);
+            $html .= sprintf('<option value="%s">%s</option>', $result->getId(), $resultString);
         }
 
         return new Response($html);
