@@ -93,9 +93,9 @@ dependent_forms:
 ```php
 $formBuilder
     ->add('country', EntityType::class, array(
-        'class'      	=> 'AppBundle:Country',
-        'required'   	=> true, 
-        'empty_value'	=> ' == Choose country ==',
+	    'class'      	=> 'AppBundle:Country',
+	    'required'   	=> true, 
+	    'empty_value'	=> ' == Choose country ==',
     ))
     ->add('region', DependentFormsType::class, array(
     	'entity_alias' 	=> 'region_by_country',
