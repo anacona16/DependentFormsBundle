@@ -2,8 +2,8 @@
 
 namespace Anacona16\Bundle\DependentFormsBundle\Form\DataTransformer;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -11,9 +11,9 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 class EntityToIdTransformer implements DataTransformerInterface
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
-    protected $em;
+    protected $entityManager;
 
     /**
      * @var string
@@ -26,14 +26,14 @@ class EntityToIdTransformer implements DataTransformerInterface
     protected $unitOfWork;
 
     /**
-     * @param EntityManager $em
-     * @param string        $class
+     * @param EntityManagerInterface    $entityManager
+     * @param string                    $class
      */
-    public function __construct(EntityManager $em, $class)
+    public function __construct(EntityManagerInterface $entityManager, $class)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
         $this->class = $class;
-        $this->unitOfWork = $this->em->getUnitOfWork();
+        $this->unitOfWork = $this->entityManager->getUnitOfWork();
     }
 
     /**
@@ -79,7 +79,7 @@ class EntityToIdTransformer implements DataTransformerInterface
             throw new UnexpectedTypeException($id, 'numeric'.$id);
         }
 
-        $entity = $this->em->getRepository($this->class)->findOneById($id);
+        $entity = $this->entityManager->getRepository($this->class)->findOneById($id);
 
         if ($entity === null) {
             throw new TransformationFailedException(sprintf('The entity with key "%s" could not be found', $id));
