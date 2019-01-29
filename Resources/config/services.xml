@@ -14,6 +14,7 @@
         </prototype>
 
         <prototype namespace="Anacona16\Bundle\DependentFormsBundle\Form\" resource="../../Form" exclude="../../Form/{DataTransformer}" autowire="true" autoconfigure="true">
+            <argument key="$dependentForms">%anacona16.dependent_forms_config%</argument>
             <tag name="form.type" />
         </prototype>
     </services>

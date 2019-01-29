@@ -24,7 +24,7 @@ class DependentFormsController extends AbstractController
         $parentId = $request->request->get('parent_id');
         $emptyValue = $request->request->get('empty_value');
 
-        $entities = $this->getParameter('anacona16.dependent_forms');
+        $entities = $this->getParameter('anacona16.dependent_forms_config');
         $entityInformation = $entities[$entityAlias];
 
         if ($entityInformation['role'] !== 'IS_AUTHENTICATED_ANONYMOUSLY') {

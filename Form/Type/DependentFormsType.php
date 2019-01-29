@@ -4,7 +4,6 @@ namespace Anacona16\Bundle\DependentFormsBundle\Form\Type;
 
 use Anacona16\Bundle\DependentFormsBundle\Form\DataTransformer\EntityToIdTransformer;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,21 +16,21 @@ class DependentFormsType extends AbstractType
     /**
      * @var EntityManagerInterface
      */
-
     private $entityManager;
+
     /**
-     * @var ParameterBagInterface
+     * @var array
      */
-    private $parameterBag;
+    private $dependentForms;
 
     /**
      * @param EntityManagerInterface    $entityManager
-     * @param ParameterBagInterface     $parameterBag
+     * @param array                     $dependentForms
      */
-    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
+    public function __construct(EntityManagerInterface $entityManager, $dependentForms)
     {
-        $this->parameterBag = $parameterBag;
         $this->entityManager = $entityManager;
+        $this->dependentForms = $dependentForms;
     }
 
     /**
@@ -54,7 +53,7 @@ class DependentFormsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entities = $this->parameterBag->get('anacona16.dependent_forms');
+        $entities = $this->dependentForms;
 
         $options['class'] = $entities[$options['entity_alias']]['class'];
         $options['property'] = $entities[$options['entity_alias']]['property'];
