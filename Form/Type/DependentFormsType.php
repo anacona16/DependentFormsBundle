@@ -20,7 +20,7 @@ class DependentFormsType extends AbstractType
 
     private $entityManager;
     /**
-     * @var ParameterBag
+     * @var ParameterBagInterface
      */
     private $parameterBag;
 
