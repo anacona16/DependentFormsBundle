@@ -3,7 +3,8 @@
 namespace Anacona16\Bundle\DependentFormsBundle\Form\Type;
 
 use Anacona16\Bundle\DependentFormsBundle\Form\DataTransformer\EntityToIdTransformer;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,16 +15,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class DependentFormsType extends AbstractType
 {
     /**
-     * @var ContainerInterface
+     * @var EntityManagerInterface
      */
-    private $container;
+
+    private $entityManager;
+    /**
+     * @var ParameterBag
+     */
+    private $parameterBag;
 
     /**
-     * @param ContainerInterface $container
+     * @param EntityManagerInterface    $entityManager
+     * @param ParameterBagInterface     $parameterBag
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
     {
-        $this->container = $container;
+        $this->parameterBag = $parameterBag;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -46,7 +54,7 @@ class DependentFormsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entities = $this->container->getParameter('anacona16.dependent_forms');
+        $entities = $this->parameterBag->get('anacona16.dependent_forms');
 
         $options['class'] = $entities[$options['entity_alias']]['class'];
         $options['property'] = $entities[$options['entity_alias']]['property'];
@@ -54,7 +62,7 @@ class DependentFormsType extends AbstractType
         $options['no_result_msg'] = $entities[$options['entity_alias']]['no_result_msg'];
 
         $builder->addViewTransformer(new EntityToIdTransformer(
-            $this->container->get('doctrine.orm.entity_manager'),
+            $this->entityManager,
             $options['class']
         ), true);
 
