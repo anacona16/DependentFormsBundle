@@ -1,19 +1,21 @@
-<?xml version="1.0" ?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="anacona16_dependent_forms_controller_route">DependentFormsBundle:DependentForms:getOptions</parameter>
+        <parameter key="anacona16_dependent_forms_controller_route">Anacona16\Bundle\DependentFormsBundle\Controller\DependentFormsController::getOptionsAction</parameter>
     </parameters>
 
     <services>
-        <service id="anacona16.type.dependent_forms"
-                 class="Anacona16\Bundle\DependentFormsBundle\Form\Type\DependentFormsType">
-            <tag name="form.type"/>
-            <argument type="service" id="service_container"/>
-        </service>
+        <prototype namespace="Anacona16\Bundle\DependentFormsBundle\Controller\" resource="../../Controller" autowire="true" autoconfigure="true">
+            <tag name="controller.service_arguments" />
+        </prototype>
+
+        <prototype namespace="Anacona16\Bundle\DependentFormsBundle\Form\" resource="../../Form" exclude="../../Form/{DataTransformer}" autowire="true" autoconfigure="true">
+            <tag name="form.type" />
+        </prototype>
     </services>
 
 </container>

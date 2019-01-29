@@ -12,14 +12,14 @@ Configuration
 
 You should configure relationship between master and dependent fields for each pair:
 
-*In this example master entity - AppBundle:Country, dependent - AppBundle:Region*
+*In this example master entity - App\Entity\Country, dependent - App\Entity\Region*
 
 ```yml
-# app/config/config.yml
+# config/packages/dependent_forms.yaml
 dependent_forms:
     dependent_forms:
         region_by_country:
-            class: AppBundle:Region
+            class: App\Entity\Region
             parent_property: country
             property: title
             role: ROLE_USER
@@ -49,14 +49,14 @@ Master and dependent fields should be in form together.
 ```php
 $formBuilder
     ->add('country', EntityType::class, array(
-    	'class' 		=> 'AppBundle:Country', 
-    	'required'  	=> true, 
-    	'empty_value'	=> '== Choose country ==',
+        'class'         => 'App\Entity\Country', 
+        'required'      => true,
+        'mapped'        => false,
     ))
     ->add('region', DependentFormsType::class, array(
-    	'entity_alias' 	=> 'region_by_country',
-    	'empty_value'	=> '== Choose region ==',
-    	'parent_field'	=> 'country',
+        'entity_alias'  => 'region_by_country',
+        'empty_value'   => '== Choose region ==',
+        'parent_field'  => 'country',
     ))
 ```
 
@@ -69,11 +69,11 @@ Mutiple levels
 You can configure multiple dependent filters:
 
 ```yml
-# app/config/config.yml
+# config/packages/dependent_forms.yaml
 dependent_forms:
     dependent_forms:
         region_by_country:
-            class: AppBundle:Region
+            class: App\Entity\Region
             parent_property: country
             property: title
             role: ROLE_USER
@@ -81,7 +81,7 @@ dependent_forms:
             order_property: title
             order_direction: ASC
         town_by_region:
-            class: AppBundle:Town
+            class: App\Entity\Town
             parent_property: region
             property: title
             role: ROLE_USER
@@ -93,19 +93,18 @@ dependent_forms:
 ```php
 $formBuilder
     ->add('country', EntityType::class, array(
-	    'class'      	=> 'AppBundle:Country',
-	    'required'   	=> true, 
-	    'empty_value'	=> ' == Choose country ==',
+        'class'         => 'App\Entity\Country',
+        'required'      => true,
     ))
     ->add('region', DependentFormsType::class, array(
-    	'entity_alias' 	=> 'region_by_country',
-    	'empty_value'	=> '== Choose region ==', 
-    	'parent_field'	=>'country',
+        'entity_alias'  => 'region_by_country',
+        'empty_value'   => '== Choose region ==', 
+        'parent_field'  =>'country',
     ))
     ->add('town', DependentFormsType::class, array(
-    	'entity_alias' 	=> 'town_by_region', 
-    	'empty_value'	=> '== Choose town ==', 
-    	'parent_field'	=>'region',
+        'entity_alias'  => 'town_by_region', 
+        'empty_value'   => '== Choose town ==', 
+        'parent_field'  =>'region',
     ))
 ```
 

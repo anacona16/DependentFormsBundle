@@ -5,15 +5,13 @@ DependentFormsBundle provides dependent form type.
 
 ## Important
 
-This bundle is based on code from: [ShtumiUsefulBundle](https://github.com/shtumi/ShtumiUsefulBundle) updated for use it with Symfony >= 2.8 and 3.0
+This bundle is based on code from: [ShtumiUsefulBundle](https://github.com/shtumi/ShtumiUsefulBundle) updated for use it with Symfony >= 3.4 and 4.0 based on Flex.
 
 Just Dependent Forms included, no Ajax Autocomplete, no DateRange form type, no DQL custom functions.
 
+If you are looking for a previous Symfony version see the branch symfony-33.
+
 ## Installation
-
-**Requirements**
-
-  * Symfony 2.8+ applications (Silex not supported).
 
 Open a command console, enter your project directory and execute the following command to download the latest stable version of this bundle:
 
@@ -23,23 +21,20 @@ $ composer require anacona16/dependent-forms-bundle
 
 This command requires you to have Composer installed globally, as explained in the [Composer documentation](https://getcomposer.org/doc/00-intro.md).
 
-### Add DependentFormsBundle to your application kernel
+### Verify DependentFormsBundle was added to you kernel
 ```php
-// app/AppKernel.php
-public function registerBundles()
-{
-    return array(
-        // ...
-        new Anacona16\Bundle\DependentFormsBundle\DependentFormsBundle(),
-        // ...
-    );
-}
+// config/bundles.php
+return [
+    // ...
+    Anacona16\Bundle\DependentFormsBundle\DependentFormsBundle::class => ['all' => true],
+    // ...
+];
 ```
 
 ### Import routes
 
 ```yml
-# app/config/routing.yml
+# config/routes/dependent_forms.yaml
 anacona16_dependent_forms:
     resource: '@DependentFormsBundle/Resources/config/routing.xml'
 ```
@@ -48,11 +43,11 @@ anacona16_dependent_forms:
 
 #### Add form theming to twig
 ```yml
-# app/config/config.yml
+# config/packages/twig.yaml
 twig:
     ...
     form_themes:
-        - 'DependentFormsBundle:Form:fields.html.twig'
+        - '@DependentForms/Form/fields.html.twig'
 ```
 
 ### Prepare the Web Assets of the Bundle

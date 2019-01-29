@@ -2,24 +2,24 @@
 
 namespace Anacona16\Bundle\DependentFormsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class DependentFormsController extends Controller
+class DependentFormsController extends AbstractController
 {
     /**
      * This action handler the ajax call for a dependent field type.
      *
      * @param Request $request
+     * @param TranslatorInterface $translator
      *
      * @return Response
      */
-    public function getOptionsAction(Request $request)
+    public function getOptionsAction(Request $request, TranslatorInterface $translator)
     {
-        $translator = $this->get('translator');
-
         $entityAlias = $request->request->get('entity_alias');
         $parentId = $request->request->get('parent_id');
         $emptyValue = $request->request->get('empty_value');
@@ -28,9 +28,7 @@ class DependentFormsController extends Controller
         $entityInformation = $entities[$entityAlias];
 
         if ($entityInformation['role'] !== 'IS_AUTHENTICATED_ANONYMOUSLY') {
-            if (false === $this->get('security.authorization_checker')->isGranted($entityInformation['role'])) {
-                throw new AccessDeniedException();
-            }
+            $this->denyAccessUnlessGranted($entityInformation['role']);
         }
 
         $qb = $this->getDoctrine()
@@ -62,11 +60,11 @@ class DependentFormsController extends Controller
             $html .= '<option value="">'.$translator->trans($emptyValue).'</option>';
         }
 
-        $accesor = $this->get('property_accessor');
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($results as $result) {
             if ($entityInformation['property']) {
-                $resultString = $accesor->getValue($result, $entityInformation['property']);
+                $resultString = $propertyAccessor->getValue($result, $entityInformation['property']);
             } else {
                 $resultString = (string) $result;
             }
