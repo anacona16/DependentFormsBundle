@@ -2,13 +2,13 @@
 
 namespace Anacona16\Bundle\DependentFormsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
-class DependentFormsController extends AbstractController
+class DependentFormsController extends Controller
 {
     /**
      * This action handler the ajax call for a dependent field type.
