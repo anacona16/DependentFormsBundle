@@ -63,4 +63,4 @@ php bin/console assets:install --symlink
 
 ## Documentation
 
-[Read documentation](https://github.com/anacona16/DependentFormsBundle/blob/master/Resources/doc/index.md)
+[Read documentation](https://github.com/anacona16/DependentFormsBundle/blob/master/Resources/doc/dependent_forms.md)
