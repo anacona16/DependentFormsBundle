@@ -5,9 +5,9 @@ DependentFormsBundle provides dependent form type.
 
 ## Important
 
-This bundle is based on code from: [ShtumiUsefulBundle](https://github.com/shtumi/ShtumiUsefulBundle) updated for use it with Symfony >= 3.4 and 4.0 based on Flex.
+This bundle is based on: [ShtumiUsefulBundle](https://github.com/shtumi/ShtumiUsefulBundle) updated for use it with Symfony >= 3.4, 4.0 and 5.0 based on Flex.
 
-Just Dependent Forms included, no Ajax Autocomplete, no DateRange form type, no DQL custom functions.
+Only Dependent Forms included, no Ajax Autocomplete, no DateRange form type, no DQL custom functions.
 
 If you are looking for a previous Symfony version see the branch symfony-33.
 
