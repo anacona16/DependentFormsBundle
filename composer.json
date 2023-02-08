@@ -1,5 +1,5 @@
 {
-    "name": "anacona16/dependent-forms-bundle",
+    "name": "acutex/dependent-forms-bundle",
     "type": "symfony-bundle",
     "description": "Symfony DependendFormsBundle",
     "keywords": ["Dependent form type", "Forms"],
