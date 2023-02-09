@@ -30,6 +30,7 @@ class DependentFormsController extends AbstractController
         if ($entityInformation['role'] !== 'IS_AUTHENTICATED_ANONYMOUSLY') {
             $this->denyAccessUnlessGranted($entityInformation['role']);
         }
+        if( '' !== $parentId){
 
         $qb = $this->getDoctrine()
             ->getRepository($entityInformation['class'])
@@ -50,6 +51,7 @@ class DependentFormsController extends AbstractController
         }
 
         $results = $qb->getQuery()->getResult();
+        }
 
         if (empty($results)) {
             return new Response('<option value="">'.$translator->trans($entityInformation['no_result_msg']).'</option>');
